@@ -25,6 +25,7 @@ public class GrowthMod {
   public static final String MODID = "growthmod";
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static float height = 0.0f;
+  public static float scale = 0.0f;
   public static float prevWalkDistance = 0.0f;
   public static float walkDistance = 0.0f;
   public static float food_heal = 0.0f;
@@ -44,25 +45,46 @@ public class GrowthMod {
   public static void calc(TickEvent.PlayerTickEvent event) {
     if (!event.player.world.isRemote()) {
       walkDistance = prevWalkDistance + event.player.distanceWalkedModified / 0.6f;
+      float base_height = 0.0f;
       if (GrowthModConfig.count_food)
-        height = (float) ((walkDistance * GrowthModConfig.heightByDistance) + food_heal + GrowthModConfig.defaultHeight);
+        base_height = (float) ((walkDistance * GrowthModConfig.heightByDistance) + food_heal + GrowthModConfig.defaultHeight);
       else
-        height = (float) ((walkDistance * GrowthModConfig.heightByDistance) + GrowthModConfig.defaultHeight);
+        base_height = (float) ((walkDistance * GrowthModConfig.heightByDistance) + GrowthModConfig.defaultHeight);
+      scale = base_height / 1.8f;
+      switch (event.player.getPose()) {
+        case STANDING:
+          height = base_height;
+          break;
+        case CROUCHING:
+          height = base_height * 1.5f / 1.8f;
+          break;
+        case SLEEPING:
+        case DYING:
+          height = 0.2f;
+          break;
+        case FALL_FLYING:
+        case SWIMMING:
+        case SPIN_ATTACK:
+          height = 0.6f;
+          break;
+      }
     }
   }
 
   @SubscribeEvent
   public static void setEyeHeightPlayer(TickEvent.PlayerTickEvent event) {
-    Class EntityClass = event.player.getClass();
-    Field field = null;
-    while (EntityClass != null) {
-      try {
-        field = EntityClass.getDeclaredField("eyeHeight");
-        field.setAccessible(true);
-        field.set(event.player, height * 0.85f);
-        break;
-      } catch (NoSuchFieldException | IllegalAccessException e) {
-        EntityClass = EntityClass.getSuperclass();
+    if (GrowthModConfig.change_eyeheight) {
+      Class EntityClass = event.player.getClass();
+      Field field = null;
+      while (EntityClass != null) {
+        try {
+          field = EntityClass.getDeclaredField("field_213326_aJ"); //eyeHeight : field_213326_aJ
+          field.setAccessible(true);
+          field.set(event.player, height * 0.85f);
+          break;
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+          EntityClass = EntityClass.getSuperclass();
+        }
       }
     }
   }
@@ -116,7 +138,7 @@ public class GrowthMod {
   @SubscribeEvent
   public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
     event.getMatrixStack().push();
-    event.getMatrixStack().scale(1.0f, height / 1.8f, 1.0f);
+    event.getMatrixStack().scale(1.0f, scale, 1.0f);
   }
 
   @SubscribeEvent

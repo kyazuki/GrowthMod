@@ -21,6 +21,7 @@ public class GrowthModConfig {
   public static double heightByDistance;
   public static double food_modifier;
   public static boolean count_food;
+  public static boolean change_eyeheight;
   public static boolean change_hitbox;
   public static boolean enable_jump_boost;
 
@@ -36,6 +37,7 @@ public class GrowthModConfig {
     heightByDistance = CLIENT.heightByDistance.get();
     food_modifier = CLIENT.food_modifier.get();
     count_food = CLIENT.count_food.get();
+    change_eyeheight = CLIENT.change_eyeheight.get();
     change_hitbox = CLIENT.change_hitbox.get();
     enable_jump_boost = CLIENT.enable_jump_boost.get();
   }
@@ -45,6 +47,7 @@ public class GrowthModConfig {
     public final ForgeConfigSpec.DoubleValue heightByDistance;
     public final ForgeConfigSpec.DoubleValue food_modifier;
     public final ForgeConfigSpec.BooleanValue count_food;
+    public final ForgeConfigSpec.BooleanValue change_eyeheight;
     public final ForgeConfigSpec.BooleanValue change_hitbox;
     public final ForgeConfigSpec.BooleanValue enable_jump_boost;
 
@@ -66,6 +69,10 @@ public class GrowthModConfig {
               .comment("Players grow when they eat foods.")
               .translation(GrowthMod.MODID + ".config" + "count_food")
               .define("count_food", true);
+      change_eyeheight = builder
+              .comment("Whether Player's eyeheight is changed.")
+              .translation(GrowthMod.MODID + ".config" + "change_eyeheight")
+              .define("change_eyeheight", true);
       change_hitbox = builder
               .comment("Whether Player's hitbox is changed.")
               .translation(GrowthMod.MODID + ".config" + "change_hitbox")
