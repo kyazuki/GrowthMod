@@ -64,7 +64,7 @@ public class GrowthModConfig {
       food_modifier = builder
               .comment("Player's height increment by hunger.")
               .translation(GrowthMod.MODID + ".config." + "food_modifier")
-              .defineInRange("food_modifier", 0.05d, 0.0d, 1000.0d);
+              .defineInRange("food_modifier", 0.025d, 0.0d, 10.0d);
       count_food = builder
               .comment("Players grow when they eat foods.")
               .translation(GrowthMod.MODID + ".config" + "count_food")
