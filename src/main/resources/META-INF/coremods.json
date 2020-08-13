@@ -1,0 +1,4 @@
+{
+  "PlayerEntity#EntitySize": "META-INF/coremods/PlayerEntity#EntitySize.js",
+  "PlayerEntity#getStandingEyeHeight": "META-INF/coremods/PlayerEntity#getStandingEyeHeight.js"
+}

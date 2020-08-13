@@ -1,10 +1,15 @@
 {
   "homepage": "https://github.com/kyazuki/GrowthMod/releases",
+  "1.16.1": {
+    "0.1.1": "1.16 update."
+  },
   "1.15.2": {
     "0.1.1": "Fix eye height bug.",
     "0.1.0": "Published."
   },
   "promos": {
+    "1.16.1-latest": "0.1.1",
+    "1.16.1-recommended": "0.1.1",
     "1.15.2-latest": "0.1.1",
     "1.15.2-recommended": "0.1.1"
   }

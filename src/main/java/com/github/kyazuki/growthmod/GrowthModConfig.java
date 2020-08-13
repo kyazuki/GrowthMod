@@ -8,13 +8,13 @@ import org.apache.commons.lang3.tuple.Pair;
 
 @Mod.EventBusSubscriber(modid = GrowthMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class GrowthModConfig {
-  public static final ClientConfig CLIENT;
-  public static final ForgeConfigSpec CLIENT_SPEC;
+  public static final CommonConfig COMMON;
+  public static final ForgeConfigSpec COMMON_SPEC;
 
   static {
-    final Pair<ClientConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
-    CLIENT_SPEC = specPair.getRight();
-    CLIENT = specPair.getLeft();
+    final Pair<CommonConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+    COMMON_SPEC = specPair.getRight();
+    COMMON = specPair.getLeft();
   }
 
   public static double defaultHeight;
@@ -27,22 +27,22 @@ public class GrowthModConfig {
 
   @SubscribeEvent
   public static void onModConfigEvent(final ModConfig.ModConfigEvent configEvent) {
-    if (configEvent.getConfig().getSpec() == GrowthModConfig.CLIENT_SPEC) {
+    if (configEvent.getConfig().getSpec() == GrowthModConfig.COMMON_SPEC) {
       bakeConfig();
     }
   }
 
   public static void bakeConfig() {
-    defaultHeight = CLIENT.defaultHeight.get();
-    heightByDistance = CLIENT.heightByDistance.get();
-    food_modifier = CLIENT.food_modifier.get();
-    count_food = CLIENT.count_food.get();
-    change_eyeheight = CLIENT.change_eyeheight.get();
-    change_hitbox = CLIENT.change_hitbox.get();
-    enable_jump_boost = CLIENT.enable_jump_boost.get();
+    defaultHeight = COMMON.defaultHeight.get();
+    heightByDistance = COMMON.heightByDistance.get();
+    food_modifier = COMMON.food_modifier.get();
+    count_food = COMMON.count_food.get();
+    change_eyeheight = COMMON.change_eyeheight.get();
+    change_hitbox = COMMON.change_hitbox.get();
+    enable_jump_boost = COMMON.enable_jump_boost.get();
   }
 
-  public static class ClientConfig {
+  public static class CommonConfig {
     public final ForgeConfigSpec.DoubleValue defaultHeight;
     public final ForgeConfigSpec.DoubleValue heightByDistance;
     public final ForgeConfigSpec.DoubleValue food_modifier;
@@ -51,7 +51,7 @@ public class GrowthModConfig {
     public final ForgeConfigSpec.BooleanValue change_hitbox;
     public final ForgeConfigSpec.BooleanValue enable_jump_boost;
 
-    public ClientConfig(ForgeConfigSpec.Builder builder) {
+    public CommonConfig(ForgeConfigSpec.Builder builder) {
       builder.push("GrowthMod Config");
       defaultHeight = builder
               .comment("Player's default height.")
